@@ -1,15 +1,13 @@
 package com.api.gerenciarpessoas.services;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.gerenciarpessoas.models.AddressModel;
-import com.api.gerenciarpessoas.models.PersonModel;
-import com.api.gerenciarpessoas.repositorys.PersonRepository;
+import com.api.gerenciarpessoas.entities.PersonEntity;
+import com.api.gerenciarpessoas.repositories.PersonRepository;
 
 @Service
 public class PersonService {
@@ -17,21 +15,20 @@ public class PersonService {
 	@Autowired
 	private PersonRepository personRepository;
 
-	public PersonModel savePerson(PersonModel personModel) {
+	public PersonEntity save(PersonEntity personModel) {
 		return personRepository.save(personModel);
 	}
-	
-	public List<PersonModel> listAllPerson(){
+
+	public List<PersonEntity> listAll() {
 		return personRepository.findAll();
 	}
-	
-	public Optional<PersonModel> findPersonById(Long id) {
+
+	public Optional<PersonEntity> findById(Long id) {
 		return personRepository.findById(id);
 	}
 
-	public void removePersonById(Long id) {
-		personRepository.deleteById(id);		
+	public void removeById(Long id) {
+		personRepository.deleteById(id);
 	}
 
 }
-	

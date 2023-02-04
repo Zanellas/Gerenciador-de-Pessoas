@@ -1,6 +1,5 @@
 package com.api.gerenciarpessoas.controllers;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -17,11 +16,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.api.gerenciarpessoas.models.AddressModel;
-import com.api.gerenciarpessoas.models.PersonModel;
-import com.api.gerenciarpessoas.repositorys.PersonRepository;
+import com.api.gerenciarpessoas.entities.AddressEntity;
 import com.api.gerenciarpessoas.services.AddressService;
-import com.api.gerenciarpessoas.services.PersonService;
 
 @RestController
 @RequestMapping("/Address")
@@ -32,46 +28,43 @@ public class AddressController {
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public AddressModel save(@RequestBody AddressModel addressModel) {
-		return addressService.saveAddress(addressModel);
+	public AddressEntity save(@RequestBody AddressEntity addressModel) {
+		return addressService.save(addressModel);
 	}
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<AddressModel> listAll(){
-		return addressService.listAllAddress();
+	public List<AddressEntity> listAll() {
+		return addressService.listAll();
 	}
-	
+
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public AddressModel findAddressById(@PathVariable("id") Long id) {
-		return addressService.findAddressById(id)
+	public AddressEntity findAddressById(@PathVariable("id") Long id) {
+		return addressService.findById(id)
 				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrada"));
 	}
-	
+
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void removeAddressById(@PathVariable("id") Long id) {
-		addressService.findAddressById(id)
-		.map(address -> {
-			addressService.removeAddressById(address.getId());
+		addressService.findById(id).map(address -> {
+			addressService.removeById(address.getId());
 			return Void.TYPE;
 		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrada"));
 	}
-	
+
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void attAddress(@PathVariable("id") Long id, @RequestBody AddressModel addressModel) {
-		addressService.findAddressById(id)
-		.map(addressBase -> {
+	public void attAddress(@PathVariable("id") Long id, @RequestBody AddressEntity addressModel) {
+		addressService.findById(id).map(addressBase -> {
 			modelMapper.map(addressModel, addressBase);
-			addressService.saveAddress(addressBase);
+			addressService.save(addressBase);
 			return Void.TYPE;
-		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address não encontrada"));	
+		}).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Address não encontrada"));
 	}
-	
-}
 
+}

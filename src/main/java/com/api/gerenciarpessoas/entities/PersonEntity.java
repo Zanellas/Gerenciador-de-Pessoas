@@ -1,4 +1,4 @@
-	package com.api.gerenciarpessoas.models;
+package com.api.gerenciarpessoas.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +27,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-public class PersonModel implements Serializable {
+@Table(name = "PERSON")
+public class PersonEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,18 +36,18 @@ public class PersonModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Column(nullable = false, length = 150)
+	@Column(name = "NAME", nullable = false, length = 150)
 	private String name;
-	
-	@Column(nullable = false)
+
+	@Column(name = "BIRTH_DATE", nullable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate birth;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_person", foreignKey = @ForeignKey(name = "fk_address_person"))
-	@JsonManagedReference	
-	private List<AddressModel> address;
-	
+	@JoinColumn(name = "ID_PERSON", foreignKey = @ForeignKey(name = "FK_ADDRESS_PERSON"))
+	@JsonManagedReference
+	private List<AddressEntity> address;
+
 	public Long getId() {
 		return id;
 	}
@@ -70,11 +72,11 @@ public class PersonModel implements Serializable {
 		this.birth = birth;
 	}
 
-	public List<AddressModel> getAddress() {
+	public List<AddressEntity> getAddress() {
 		return address;
 	}
 
-	public void setAddress(List<AddressModel> address) {
+	public void setAddress(List<AddressEntity> address) {
 		this.address = address;
 	}
 
