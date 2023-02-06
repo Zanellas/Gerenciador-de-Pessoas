@@ -18,7 +18,6 @@ import com.api.gerenciarpessoas.repositories.PersonRepository;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@SpringBootTest
 class GerenciarPessoasApplicationTests {
 
 	@Autowired
