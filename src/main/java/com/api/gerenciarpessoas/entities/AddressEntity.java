@@ -19,7 +19,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "ADDRESS")
-public class Address implements Serializable {
+public class AddressEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
