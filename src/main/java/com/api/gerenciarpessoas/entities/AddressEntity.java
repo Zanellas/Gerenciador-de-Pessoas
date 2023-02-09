@@ -14,18 +14,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "ADDRESS")
-public class AddressEntity implements Serializable {
+public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +30,7 @@ public class AddressEntity implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ID_PERSON", foreignKey = @ForeignKey(name = "FK_ADDRESS_PERSON"))
 	@JsonBackReference
-	private PersonEntity person;
+	private Person person;
 
 	@Column(name = "STREET", nullable = false, length = 150)
 	private String street;
@@ -51,62 +45,6 @@ public class AddressEntity implements Serializable {
 	private String city;
 
 	@Column(name = "MAIN", nullable = false)
-	private Boolean main;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public PersonEntity getPerson() {
-		return person;
-	}
-
-	public void setPerson(PersonEntity person) {
-		this.person = person;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public Boolean getMain() {
-		return main;
-	}
-
-	public void setMain(Boolean main) {
-		this.main = main;
-	}
+	private Boolean main;	
 
 }
